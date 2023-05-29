@@ -16,9 +16,17 @@ h2 {
 }
 h3 {
     font-size: 3rem;
-    text-align: center;
 }
 p {
     color: v.$blanco;
     font-size: 2rem;
+}
+
+.nombre-pagina {
+    text-align: center;
+    margin: 5rem 0;
+    font-family: v.$bold;
+}
+.descripcion-pagina {
+    text-align: center;
 }

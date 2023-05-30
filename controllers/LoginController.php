@@ -9,8 +9,46 @@ use MVC\Router;
 class LoginController {
 
     public static function login(Router $router) {
+        $alertas = [];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+            
+            $auth = new Usuario($_POST);
+            $alertas = $auth->validarLogin();
+            
+            if (empty($alertas)) {
+                $usuario = Usuario::where('email',$auth->email);
+                
+                if ($usuario) {
+                    //Verificar el password
+                    if ($usuario->comprobarPasswordYVerificado($auth->password)) {
+                        // autenticar al usuario
+                        isSession();
+
+                        $_SESSION['id'] = $usuario->id;
+                        $_SESSION['nombre'] = $usuario->nombre. " ". $usuario->apellido;
+                        $_SESSION['email'] = $usuario->email;
+                        $_SESSION['login'] = true;
+
+                        //redireccionamiento
+                        if ($usuario->admin === '1') {
+                            $_SESSION['admin'] = $usuario->admin ?? null;
+                            header('location: /admin');
+                        } else {
+                            header('location: /cita');
+                        }
+                    }
+                    
+                } else {
+                    Usuario::setAlerta('error', 'Usuario no encontrado');
+                }
+            }
+        }
+        $alertas = Usuario::getAlertas();
         
-        $router->render('auth/login');
+        $router->render('auth/login', [
+            'alertas'=>$alertas
+        ]);
     }
     public static function logout(){
         echo "Desde Logout";
@@ -25,10 +63,12 @@ class LoginController {
         echo "Desde recuperar";
     }
     public static function crear(Router $router){
+        
         $usuario = new Usuario;
         // Alertas vacías
         $alertas = [];
         if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+
             $usuario->sincronizar($_POST);
             $alertas = $usuario->validarNuevaCuenta();
 
@@ -88,16 +128,13 @@ class LoginController {
         } else {
             Usuario::setAlerta('error', $mensajeError);
         }
-        
-
-        //TODO Revisar los mensajes para mostrar un enlace al inicio si es correcta o mostrar el correo de administracion en caso de error
 
 
 
         $alertas = Usuario::getAlertas();
            
         $router->render('auth/confirmar-cuenta', [
-            'alertas' => $alertas
+            'alertas' => $alertas,
         ]);
     }
 }

@@ -26,7 +26,8 @@ class LoginController {
                         isSession();
 
                         $_SESSION['id'] = $usuario->id;
-                        $_SESSION['nombre'] = $usuario->nombre. " ". $usuario->apellido;
+                        $_SESSION['nombre'] = $usuario->nombre;
+                        $_SESSION['apellido'] = $usuario->apellido;
                         $_SESSION['email'] = $usuario->email;
                         $_SESSION['login'] = true;
 

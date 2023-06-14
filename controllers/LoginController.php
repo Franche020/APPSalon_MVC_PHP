@@ -91,7 +91,11 @@ class LoginController {
         $error = false;
         $exito = false;
         // Token desde get sanitizado
-        $token = s($_GET['token'])??'';
+        if (!isset($_GET['token'])){
+            $token = '';
+        } else {
+            $token = s($_GET['token'])??'';
+        }
         // Buscar usuario por token
         $usuario = Usuario::where('token', $token);
 

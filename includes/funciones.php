@@ -13,8 +13,17 @@ function s($html) : string {
     return $s;
 }
 
+// TODO REVISAR LA PROTECCION DE LA RUTA
+
 function isSession() :void{
-    if (!$_SESSION){
+    startSession();
+    if (empty($_SESSION)){
+        header('location: /');
+    }
+}
+
+function startSession(): void {
+    if (session_status() === PHP_SESSION_NONE) {
         session_start();
     }
 }

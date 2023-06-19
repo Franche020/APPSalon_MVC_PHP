@@ -1,6 +1,12 @@
 <h1 class="nombre-pagina">Crear nueva cita</h1>
 <p class="nombre-pagina">Elige tus servicios e introduce tus datos</p>
 
+<div class="barra">
+    <p>Hola: <?php echo $nombre.' '.$apellido ?? '' ?></p>
+
+    <a href="/logout" class="boton">Cerrar Sesion</a>
+</div>
+
 <div id="app">
     <nav class="tabs">
         <button type="button" data-paso="1" class="actual">Servicios</button>
@@ -19,7 +25,7 @@
         <form class="formulario">
             <div class="campo">
                 <label for="nombre">Nombre</label>
-                <input type="text" id="nombre" placeholder="Tu Nombre" value="<?php echo $nombre; ?>" disabled>
+                <input type="text" id="nombre" placeholder="Tu Nombre" value="<?php echo $nombre.' '. $apellido ?? ''; ?>" disabled>
             </div>
             <div class="campo">
                 <label for="fecha">Fecha</label>

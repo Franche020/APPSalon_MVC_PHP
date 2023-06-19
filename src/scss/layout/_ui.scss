@@ -22,3 +22,17 @@
     margin: 0 auto;
     padding: 3rem 0;
 }
+.barra {
+    margin: v.$separacion 0;
+    .boton {
+        margin: 0;
+        @include m.boton(darken(v.$negro, 5%),v.$blanco);
+    }
+    display: flex;
+    flex-direction: column;
+    @include m.tablet{
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+}

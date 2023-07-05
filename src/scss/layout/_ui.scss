@@ -9,6 +9,7 @@
     }
 }
 .imagen {
+    overflow: hidden;
     height: 20rem;
     background-image: url(../img/1.jpg);
     background-size: cover;
@@ -19,8 +20,10 @@
 }
 .app {
     width: 95%;
+    height: 100vh;
     margin: 0 auto;
-    padding: 3rem 0;
+    padding: 3rem 2rem 3rem 0;
+    overflow: auto;
 }
 .barra {
     margin: v.$separacion 0;

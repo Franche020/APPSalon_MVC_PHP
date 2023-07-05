@@ -1,3 +1,11 @@
+
+// TODO Valiadacion PHP de fecha para que sea a partir del dia siguiente al actual en creacion cita.
+
+
+
+
+
+
 let paso = 1;
 const pasoInicial = 1;
 const pasoFinal = 3;
@@ -23,6 +31,8 @@ function iniciarApp() {
     botonesPaginador(); // Agrega o quita los botones del paginador
     paginaAnterior();
     paginaSiguiente();
+
+    //scrollPadding(); // Funcion para el ajuste del padding si hay scrollbar o no 
 
     consultarAPI(); // Consulta la API en el backend de php
 
@@ -74,6 +84,7 @@ function botonesPaginador () {
         paginaSiguiente.classList.remove('ocultar');
     }
     mostrarSeccion();
+    scrollPadding();
 }
 
 
@@ -125,6 +136,7 @@ async function consultarAPI() {
         const resultado = await fetch(url);
         const servicios = await resultado.json();
         mostrarServicios(servicios);
+        scrollPadding();
         
     } catch(error) {
         console.log(error);
@@ -348,7 +360,7 @@ async function reservarCita(){
             }).then(()=>{
                 setTimeout(()=>{
                     window.location.reload();
-                },3000)
+                },1500)
             });
         }
     } catch (error) {
@@ -361,4 +373,18 @@ async function reservarCita(){
 
 }
 
-// TODO Valiadacion PHP de fecha para que sea a partir del dia siguiente al actual.
+
+
+
+function scrollPadding () {
+    const app = document.querySelector('.app');
+    
+    if (app.scrollHeight <= app.clientHeight) {
+        app.classList.add('padding-right-0');
+    } else {
+        app.classList.remove('padding-right-0');
+    }
+
+    console.log(app.scrollHeight);
+    console.log(app.clientHeight);
+}

@@ -10,6 +10,7 @@ class APIController{
 
     public static function index () {
         isSession();
+        
         $servicios = Servicio::all();
 
         echo json_encode($servicios);
@@ -17,6 +18,8 @@ class APIController{
 
     public static function guardar() {
         // Almacena la cita y devuelve el ID
+        isSession();
+
         $cita = new Cita($_POST);
         $resultado = $cita->guardar();
         $id = $resultado['id'];
@@ -34,5 +37,20 @@ class APIController{
         }
         // retornamos una respuesta
         echo json_encode(['resultado' => $resultado]);
+    }
+
+    public static function eliminar () {
+        isSession();
+        isAdmin();
+        
+        if($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $id = s($_POST['id']);
+            $referer = $_SERVER["HTTP_REFERER"];
+            $cita = Cita::find($id);
+            $cita->eliminar();
+
+            header('location:' .$referer);
+        }
+        
     }
 }

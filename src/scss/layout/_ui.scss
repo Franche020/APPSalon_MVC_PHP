@@ -39,3 +39,14 @@
         align-items: center;
     }
 }
+.barra-horizontal{
+    margin-bottom: v.$separacion;
+    @include m.tablet {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+    }
+    .boton {
+        margin: 0 0 1rem 0;
+    }
+}
